@@ -270,30 +270,9 @@
    (gen-label :.label-danger [:white :light-red])])
 
 (defn default-style []
-  [[:body {:$text [1 1.5] :margin 0 :padding 0 :color "#8da0aa" :height "100%"
-           :font-family "Roboto, Arial, 'Helvetica Neue', Helvetica, sans-serif" }
-    [:html {:height "100%"}]
-    [:* {:border "none" :margin 0 :padding 0}]
-    [:hr {:border-top "1px solid #ddd" :$margin [2 0]}]
-    [:a {:color [:black] :text-decoration "none" }
-     [:&:hover {:text-decoration "underline" :cursor "pointer"}] ] ]
-   [:.anonimous-layout {:$bg-color [ :bg-gray]
-                        :width "100%" :min-height "100%"
-                        :$flex-row ["flex-start" "center" ] }]
-   [:.hidden {:display "none"}]
-   [:.center {:text-align "center"}]
-   [:.middle {:vertical-align "middle"}]
-   [:.muted {:$color :mute}]
-   [:.inline {:$flex-row ["flex-start" "flex-start"]}]
-
-   table
-   scroll-style
-   default-form-style
-   (typography)
-   (buttons-style)
-   (alerts-style)
-   (labels-style)
-   ])
+  [[:html {:height "100%"}]
+   [:#app {:height "100%"}]
+   [:body {:height "100%" }] ])
 
 (defn &unstyle []
   [:& {:text-decoration "none"}

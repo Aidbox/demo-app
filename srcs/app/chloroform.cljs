@@ -267,13 +267,14 @@
   (let [value-fn (or (:value-fn attrs) identity)
         text-fn  (or (:text-fn attrs) identity)
         k (into [:data] key)]
+
      (into [:select.form-control {:on-change #(swap! doc assoc-in k (.. % -target -value))
                                   :on-blur #(mark-as-touched doc key)
-                                  :value (get-in @doc k)
+                                  :value (or (get-in @doc k) "")
                                   :class (:class attrs)
                                   :disabled (:disabled attrs)}]
            (map (fn [x]
-                  [:option {:value (value-fn x)} (text-fn x)])
+                  [:option {:value (or (value-fn x) "")} (text-fn x)])
                 (:collection attrs)))))
 
 (defn collection [doc {name :name :as attrs} k]

@@ -17,3 +17,12 @@
     (let [res (<! (http/DELETE {:url  (mk-ref res)}))]
       (when (and (:success res) cb) (cb)))))
 
+(defn post [& [res cb]]
+  (go
+    (let [res (<! (http/POST {:url  (mk-ref res) :data res }))]
+      (when (and (:success res) cb) (cb)))))
+
+(defn put [& [res cb]]
+  (go
+    (let [res (<! (http/PUT {:url  (mk-ref res) :data res }))]
+      (when (and (:success res) cb) (cb)))))

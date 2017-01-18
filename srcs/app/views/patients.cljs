@@ -14,7 +14,7 @@
   (go
     (let [result (<! (http/GET {:url "fhir/Patient" }))]
       (when (:success result)
-        (reset! scope (map :resource (get-in result [:body :entry])))))))
+        (reset! scope (mapv :resource (get-in result [:body :entry])))))))
 
 (defn- *patient [scope id]
   (go
@@ -22,13 +22,8 @@
       (when (:success result)
         (swap! scope assoc :data (:body result))))))
 
-(defn save [scope]
-  (go
-    (let [result (<! (http/PUT {:url (str "fhir/Patient/" (:id scope)) :data scope}))])))
-
-(defn create [scope]
-  (go
-    (let [result (<! (http/POST {:url (str "fhir/Patient/" ) :data scope}))])))
+(defn create [scope] (fhir/post scope))
+(defn save  [scope] (fhir/put scope))
 
 (defn delete [p]
   (if (js/confirm (str "Delete patient " (:id p) "?"))
@@ -40,36 +35,43 @@
    [:td (:gender p)]
    [:td (:birthDate p)]
    [:td
-    [:a.btn.btn-default.btn-sm{:href (str "#/patient/show/" (:id p)) :title "Edit patient"} "Edit" ]
-    [:button.btn.btn-danger.btn-sm {:title "Delete patient"
-                                    :on-click #(delete p) } "Delete"] ]
+    [:a.btn.btn-default.btn-sm.mrg5A {:href (str "#/patient/show/" (:id p)) :title "Edit"} [:i.fa.fa-edit.glyph-icon]  ]
+    [:button.btn.btn-danger.btn-sm.mrg5A {:title "Delete patient"
+                                    :on-click #(delete p) } [:i.fa.fa-trash.glyph-icon]] ]
    ])
 
 (defn patients []
-    (*patients pts)
-    (fn []
-      (layout
-        [:div
-         ($style
-           [[:.flex-row {:$flex-row []}]])
-         [:div.flex-row
-          [:div#page-title
-           [:h2 "Patients"]
-           [:p "Patients list"] ]
-          [:a.btn.btn-primary {:href "#/patient/new"} "Create"]]
-         #_[:div.panel
-            [:div.panel-body
-             [:form.form
-              [:input.form-control {:placeholder "Search"}] ]
-             ]]
-         [:div.panel
+  (*patients pts)
+  (fn []
+    (layout
+      [:div
+       ($style
+         [[:.flex-row {:$flex-row []}]])
+       [:div.flex-row
+        [:div#page-title
+         [:h2 "Patients"]
+         [:p "Patients list"] ]
+        [:a.btn.btn-primary {:href "#/patient/new"} "Create"]]
+       #_[:div.panel
           [:div.panel-body
+           [:form.form
+            [:input.form-control {:placeholder "Search"}] ]
+           ]]
+       [:div.panel
+        [:div.panel-body
+         (if (empty? @pts)
+           [:div.text-center
+            [:h4.mrg10A "No patients"]
+            [:a.btn.btn-primary {:href "#/patient/new"} "Create new patient"]
+            
+            ]
            [:table.table.table-hover
             [:thead
              [:tr
               [:th "Name"] [:th "Gender"] [:th "Birthdate"] [:th "Action"]] ]
             [:tbody.tbody
-              (for [p @pts] ^{:key (:id p)} [pt p])]]]]])))
+             (for [p @pts] ^{:key (:id p)} [pt p])]]
+           )]]])))
 
 (defn patient-form [f action]
   (let [genders (atom {})
@@ -87,8 +89,7 @@
 
         [:$row  {:name :gender :label "Gender" :as :select
                  :value-fn :code :text-fn :display
-                 :collection (get-in @genders [:expansion :contains])
-                 }]
+                 :collection (get-in @genders [:expansion :contains]) }]
 
         [:$row  {:name :birthDate
                  :label "Birth date"
@@ -125,6 +126,7 @@
            [patient-form f :show]]]]))))
 
 (defn patient [{id :id action :action :as params}]
+  (js/console.log params)
   (cond
     (= action "new")
       (new-patient)
