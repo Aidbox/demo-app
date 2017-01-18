@@ -63,7 +63,6 @@
            [:div.text-center
             [:h4.mrg10A "No patients"]
             [:a.btn.btn-primary {:href "#/patient/new"} "Create new patient"]
-            
             ]
            [:table.table.table-hover
             [:thead

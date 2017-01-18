@@ -9,8 +9,17 @@
             [:#header-nav-right [:.glyph-icon {:margin-top "10px"}] ]
             ])
    [:div#header-logo.logo-bg
-     [:a.logo-content-big {:href "#/" :title "Aidbox demo app"} "Aidbox demo app " ]]
-   [:div#header-nav-left "Breadcrumbs and headers"]
+     [:a.logo-content-big {:href "#/" :title "Aidbox demo app"} 
+      [:img {:src "/img/logo-icon.png"}]
+      ]]
+   [:div#header-nav-left
+    [:div.user-account-btn.dropdown.open
+      [:a.user-profile.clearfix {:href "#/profile" :title "Profile"}
+       [:img {:width "28" :src "/img/user.png" :alt "My account"}]
+       [:span "Mr User Name Long"]
+       [:i.glyph-icon.icon-angle-down] ]
+     ]
+    ]
    [:div#header-nav-right
      [:a.header-btn {:href "#/login" :title "Sign in"}
       [:i.fa.fa-sign-in.glyph-icon]]] ])
@@ -20,7 +29,7 @@
 	  [:div.scroll-sidebar
      [:ul#sidebar-menu
       [:li.header "FHIR"]
-      [:li [:a.sf-with-ul {:href "#/patients" :title "Patients"}
+      [:li [:a {:href "#/patients" :title "Patients"}
             [:i.glyph-icon.fa.fa-user-plus]
             [:span "Patients"]]]
       ]]])
@@ -35,7 +44,9 @@
    sidebar
    [:div#page-content-wrapper
     [:div#page-content
-     [:div.container content]]]
+     [:div.container content]
+     [:div.fix]
+     ]]
    footer
    ])
 
