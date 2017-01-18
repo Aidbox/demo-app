@@ -1,17 +1,12 @@
-(ns sample-demo.core
+(ns app.core
   (:require [reagent.core :as reagent :refer [atom]]
-            [sample-demo.routes]
+            [app.routes]
             [goog.events]
             [secretary.core :as secretary])
   (:import goog.History
            goog.history.EventType))
 
-(def application
-  (js/document.getElementById "app"))
-
-(defonce app-state
-  (atom
-    {:app-name "Sample demo"}))
+(def application (js/document.getElementById "app"))
 
 
 (defn render [path]

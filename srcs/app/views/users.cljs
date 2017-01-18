@@ -1,6 +1,5 @@
-(ns sample-demo.users
-  (:require [sample-demo.layout :refer [layout]])
-  )
+(ns app.views.users
+  (:require [app.layout :refer [layout]]))
 
 (defn users []
   (layout
