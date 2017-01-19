@@ -3,6 +3,7 @@
   (:require [cljs-http.client :as http]
             [reagent.core :as r]
             [app.config :as c]
+            [app.state :as s]
             [cljs.core.async :refer [<!]]))
 
 (defn default-params [opts & [over]]
@@ -34,7 +35,7 @@
 
 (defonce access-tokens (r/atom {}))
 
-(defn get-access-token [box-id]
+(defn get-access-token []
   (go
     (if-let [access-token (get-in @access-tokens [:access_token])]
       access-token
@@ -49,8 +50,8 @@
     (http/request opts)))
 
 (defn xhr-box [opts]
-  (go (let [url (str (:box-url @c/config) (:url opts))
-            access-token (<! (get-access-token))
+  (go (let [url (str (:box-url c/config) (:url opts))
+            access-token "d" #_(<! (get-access-token))
             params (-> opts
                        #_(assoc-in [:query-params :access_token]  access-token)
                        (assoc :url url )) ]

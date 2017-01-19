@@ -8,7 +8,6 @@
 
 (def application (js/document.getElementById "app"))
 
-
 (defn render [path]
   (reagent/render-component [#(secretary/dispatch! (.-token path))] application))
 

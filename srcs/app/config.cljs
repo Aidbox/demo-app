@@ -1,8 +1,6 @@
-(ns app.config
-  (:require [reagent.core :as reagent :refer [atom]]))
+(ns app.config)
 
 (defonce config
-  (atom
-    {:app-name "Sample demo"
-     :box-url  "http://demo.miac.local/" }))
+  {:app-name "Sample demo"
+   :box-url  "http://demo.miac.local/" })
 

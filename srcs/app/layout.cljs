@@ -1,28 +1,34 @@
 (ns app.layout
-  (:require [app.styles :as s :refer [$style]]))
+  (:require [app.styles :as s :refer [$style]]
+            [reagent.session :as session]))
 
 (def header
-  [:header#page-header.bg-gradient-9
-   ($style [[:#header-logo
-             [:a.logo-content-big {:$color :white :text-indent 0}]
-             [:a.logo-content-big:hover {:$color :white :text-indent 0}]]
-            [:#header-nav-right [:.glyph-icon {:margin-top "10px"}] ]
-            ])
-   [:div#header-logo.logo-bg
-     [:a.logo-content-big {:href "#/" :title "Aidbox demo app"} 
-      [:img {:src "/img/logo-icon.png"}]
-      ]]
-   [:div#header-nav-left
-    [:div.user-account-btn.dropdown.open
-      [:a.user-profile.clearfix {:href "#/profile" :title "Profile"}
-       [:img {:width "28" :src "/img/user.png" :alt "My account"}]
-       [:span "Mr User Name Long"]
-       [:i.glyph-icon.icon-angle-down] ]
-     ]
-    ]
-   [:div#header-nav-right
-     [:a.header-btn {:href "#/login" :title "Sign in"}
-      [:i.fa.fa-sign-in.glyph-icon]]] ])
+  (fn []
+    (js/console.log "ddddddd" (session/get :user))
+    [:header#page-header.bg-gradient-9
+     ($style [[:#header-logo
+               [:a.logo-content-big {:$color :white :text-indent 0}]
+               [:a.logo-content-big:hover {:$color :white :text-indent 0}]]
+              [:#header-nav-right [:.glyph-icon {:margin-top "10px"}] ]
+              ])
+     [:div#header-logo.logo-bg
+      [:a.logo-content-big {:href "#/" :title "Aidbox demo app"}
+       [:img {:src "/img/logo-icon.png"}]
+       ]]
+     [:div#header-nav-left
+      (if (session/get :user)
+        [:div.user-account-btn.dropdown.open
+         [:a.user-profile.clearfix {:href "#/profile" :title "Profile"}
+          [:img {:width "28" :src "/img/user.png" :alt "My account"}]
+          [:span (session/get-in [:user :data :name])]
+          [:i.glyph-icon.icon-angle-down] ]
+         ]
+
+        )
+      ]
+     [:div#header-nav-right
+      [:a.header-btn {:href "#/login" :title "Sign in"}
+       [:i.fa.fa-sign-in.glyph-icon]]] ]))
 
 (def sidebar
    [:aside#page-sidebar
@@ -40,7 +46,7 @@
 (defn layout [content]
   [:div#page-wrapper
    ($style (s/default-style))
-   header
+   [header]
    sidebar
    [:div#page-content-wrapper
     [:div#page-content

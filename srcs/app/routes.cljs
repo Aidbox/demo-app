@@ -5,15 +5,12 @@
             [app.views.home-page :as hp]
             [app.views.users :as u]
             [app.views.login :as l]
-            [app.views.patients :as pt]
-
-
-            ))
+            [app.views.patients :as pt]))
 
 (secretary/set-config! :prefix "#")
 
-(defroute "/login" [] (l/login))
-(defroute "/" [] (hp/home-page))
+(defroute "/login" [] (l/$login))
+(defroute "/" [] (hp/$home-page))
 (defroute "/users"  [] (u/users))
 (defroute "/user/:id" [id] (u/user id))
 (defroute "/patients"  [] (pt/patients))

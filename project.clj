@@ -12,6 +12,7 @@
                   :exclusions [org.clojure/tools.reader]]
                  [garden "1.3.2"]
                  [cljs-http "0.1.42"]
+                 [reagent-utils "0.2.0"]
                  [com.andrewmcveigh/cljs-time "0.4.0"]
                  [secretary "1.2.3"]
                  [cljs-pikaday "0.1.3"]
