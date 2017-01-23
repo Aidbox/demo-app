@@ -14,4 +14,4 @@ cache:
 script:
   - lein cljsbuild once min
   - git add resources/public && git commit -m "Initial dist subtree commit"
-  - git subtree push --prefix dist origin gh-pages
+  - git subtree push --prefix resources/public origin gh-pages
