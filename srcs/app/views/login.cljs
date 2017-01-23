@@ -22,7 +22,7 @@
   (logout)
   (session/reset! r)
   (js/console.log r)
-  (cookies/set! :access-token (:access_token r))
+  (cookies/set! :access_token (:access_token r))
   (cookies/set! :user (:user r))
   (redirect "/"))
 

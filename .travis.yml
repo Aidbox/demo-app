@@ -1,0 +1,8 @@
+language: clojure
+lein: 2.6.1
+jdk:
+  - oraclejdk8
+sudo: required
+group: edge
+git:
+  submodules: false

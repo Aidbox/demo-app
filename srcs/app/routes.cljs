@@ -1,7 +1,6 @@
 (ns app.routes
   (:require [secretary.core :as secretary :refer-macros [defroute]]
             [app.layout :refer [layout]]
-
             [app.views.home-page :as hp]
             [app.views.users :as u]
             [app.views.login :as l]

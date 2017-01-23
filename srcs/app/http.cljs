@@ -3,7 +3,8 @@
   (:require [cljs-http.client :as http]
             [reagent.core :as r]
             [app.config :as c]
-            [app.state :as s]
+            [reagent.session :as session]
+            [reagent.cookies :as cookies]
             [cljs.core.async :refer [<!]]))
 
 (defn default-params [opts & [over]]
@@ -33,16 +34,14 @@
 (def request-no-decode
   (wrap-request-no-decode cljs-http.core/request))
 
-(defonce access-tokens (r/atom {}))
 
 (defn get-access-token []
-  (go
-    (if-let [access-token (get-in @access-tokens [:access_token])]
-      access-token
-      (let [{body :body :as res} (<! (http/get (str "/boxes/" box-id)))] ;; GET ACCESS TOKEN FROM LOGIN
+  (if-let [access-token (cookies/get :access_token)]
+    access-token
+    #_(let [{body :body :as res} (<! (http/get (str "/boxes/" box-id)))] ;; GET ACCESS TOKEN FROM LOGIN
         (if (:success res)
           (do (swap! access-tokens assoc box-id body)
-              (:access_token body)))))))
+              (:access_token body))))))
 
 (defn perform-request [opts]
   (if (:no-decode opts)
@@ -51,9 +50,9 @@
 
 (defn xhr-box [opts]
   (go (let [url (str (:box-url c/config) (:url opts))
-            access-token "d" #_(<! (get-access-token))
+            access-token  (get-access-token)
             params (-> opts
-                       #_(assoc-in [:query-params :access_token]  access-token)
+                       (assoc-in [:query-params :access_token]  access-token)
                        (assoc :url url )) ]
         (<! (perform-request params)))))
 
