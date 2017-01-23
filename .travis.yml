@@ -6,3 +6,9 @@ sudo: required
 group: edge
 git:
   submodules: false
+cache:
+  directories:
+    - $HOME/.m2
+
+script:
+  - cljsbuild once min
