@@ -12,4 +12,4 @@ cache:
 
 
 script:
-  - cljsbuild once min
+  - lein cljsbuild once min
