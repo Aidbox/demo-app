@@ -3,6 +3,7 @@
             [app.oauth :as oauth]
             [reagent.session :as session]
             [reagent.core :as r :refer [atom]]
+            [app.utils :as utils :refer [redirect]]
             [reagent.session :as session]))
 
 (session/put! :toggle-profile :none)
@@ -20,6 +21,7 @@
 
 (defn logout []
   (oauth/logout)
+  (redirect "/login")
   (toggle-profile))
 
 
@@ -80,15 +82,18 @@
     [:ul#sidebar-menu
      [:li.header "FHIR"]
      [:li [:a {:href "#/patients" :title "Patients"}
-           [:i.glyph-icon.fa.fa-user-plus]
-           [:span "Patients"]]]
+           [:i.glyph-icon.fa.fa-user-plus] [:span "Patients"]]]
+     [:li [:a {:href "#/medications" :title "Medication"}
+           [:i.glyph-icon.fa.fa-medkit] [:span "Medication"]]]
+     [:li [:a {:href "#/practitioners" :title "Practitioners"}
+           [:i.glyph-icon.fa.fa-user-md] [:span "Practitioners"]]]
      ]]])
 
 (def footer
   [:footer#page-footer ])
 
 (defn layout [content]
-  [:div#page-wrapper 
+  [:div#page-wrapper
    ($style (s/default-style))
    [header]
    sidebar

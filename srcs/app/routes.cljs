@@ -13,7 +13,6 @@
 (defroute "/users"  [] (u/users))
 (defroute "/user/:id" [id] (u/user id))
 (defroute "/patients"  [] (pt/patients))
-(defroute "/patient/:action" {:as params} (pt/patient params))
 (defroute "/patient/:action/:id" {:as params} (pt/patient params))
 
 ;; Catch all

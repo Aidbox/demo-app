@@ -31,11 +31,13 @@
 
 (defn pt [p]
   [:tr
-   [:td (str (get-in p [:name 0 :family 0]) " " (get-in p [:name 0 :given 0]))]
+   [:td
+    [:a {:href (str "#/patient/show/" (:id p)) }
+     (str (get-in p [:name 0 :family 0]) " " (get-in p [:name 0 :given 0]))]]
    [:td (:gender p)]
    [:td (:birthDate p)]
    [:td
-    [:a.btn.btn-default.btn-sm.mrg5A {:href (str "#/patient/show/" (:id p)) :title "Edit"} [:i.fa.fa-edit.glyph-icon]  ]
+    [:a.btn.btn-default.btn-sm.mrg5A {:href (str "#/patient/edit" (:id p)) :title "Edit"} [:i.fa.fa-edit.glyph-icon]  ]
     [:button.btn.btn-danger.btn-sm.mrg5A {:title "Delete patient"
                                     :on-click #(delete p) } [:i.fa.fa-trash.glyph-icon]] ]
    ])
@@ -112,7 +114,7 @@
            [patient-form f :new]
            ]]]))))
 
-(defn show-patient [id]
+(defn edit-patient [id]
   (let [f (atom {:data empty-patient}) ]
     (*patient f id)
     (fn []
@@ -129,7 +131,7 @@
   (cond
     (= action "new")
       (new-patient)
-    (= action "show")
-      (show-patient id)
+    (= action "edit")
+      (edit-patient id)
     :else
       (new-patient)) )

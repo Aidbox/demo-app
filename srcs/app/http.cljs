@@ -52,8 +52,9 @@
   (go (let [url (str (:box-url c/config) (:url opts))
             access-token  (get-access-token)
             params (-> opts
-                       (assoc-in [:query-params :access_token]  access-token)
+                       (cond-> access-token (assoc-in [:query-params :access_token]  access-token))
                        (assoc :url url )) ]
+
         (<! (perform-request params)))))
 
 (defn xhr [{data :data :as opts}]
