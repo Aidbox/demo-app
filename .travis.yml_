@@ -15,10 +15,9 @@ env:
     - secure: KVOACdmt7hbpWFnPqbqyyYtcEo2nhXaLPfrmmYa5QZxEmzTWMwymEzQKTESpiBwf7+I6FR9ZVHUV+AqUWjFqjN0HWR36I1wA0lPGh87oAl1PqWU6atjtit07kLR/tf4lxiPz8SRfiCuBVdegdGTAnPs8uC9UJGHE3Q2FFfrvZ8eTV/8ysH8oMjWrfzPXFuYmy8PGQ0+QkMRHyBsa7YKvFRScisFm9ZoB1moNBGJ28sS/QqOuNleEsvcGJIoMotajbUCRnYEXrrvbPsIvv/8v4vUPF0jwGicRkS5MmLQ5MS8D2IylEV2cYzMMx7Ys8tPEKBLx9CHtMixlrM1Ct5qSir/CwPJBdJJ+v9pwf3+T6tJOpuhR9GUlRaRwHwXQIKmyXr+216CTICAhIsIs0+5E4EUIJlDNF0o+VE08SI3tBpP1DYl/M4NPsMGhcH5Wt/HGNbHSRl/Mj99FO/XKwUvf4/Rh4mDERXIL7LkoIRgaMvkTsjQkVezmp5CIi14jDPS73OaTNvn/deBWZSvoUKUUO7u0gnY/DRKoAxNURaYeUPDsErKsMKfwkTdE9ruGHjDPINyuxkqmGtIA97ofg68JfkiTzh2+J+VdeVBXBpXYcVWW2xqni9Kii0hyCJFB7RI1nc+132A774uFsGhAwLBX+VbLYgniRPYyUjfAqNtJK9w=
 
 script:
-  - lein cljsbuild once min
-  - git config --global user.email "robot@nobody.org"
-  - git config --global user.name "Travis CI"
-  - git add .
-  - git commit -m "Initial dist subtree commit"
-  #- git push --force --quiet "https://${GITHUB_TOKEN}@$github.com/${GITHUB_REPO}.git" master:gh-pages > /dev/null 2>&1
-  - git subtree push --prefix resources/public --force --quiet "https://${GITHUB_TOKEN}@$github.com/${GITHUB_REPO}.git" origin gh-pages > /dev/null 2>&1
+  #- lein cljsbuild once min
+  #- git config --global user.email "robot@nobody.org"
+  #- git config --global user.name "Travis CI"
+  #- git add .
+  #- git commit -m "Initial dist subtree commit"
+  #- git subtree push --prefix resources/public --force --quiet "https://${GITHUB_TOKEN}@$github.com/${GITHUB_REPO}.git" origin gh-pages > /dev/null 2>&1
